@@ -2,7 +2,9 @@ import React from 'react';
 
 const TextInput = (props) => (
   <div>
-    <label htmlFor={props.id}>{props.label}</label>
+    <label htmlFor={props.id}>
+      {props.label} {props.required ? <span style={{ color: 'red' }}> *</span> : ''}
+    </label>
     <input
       type="text"
       id={props.id}

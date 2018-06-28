@@ -1,5 +1,6 @@
 import React from 'react';
 
+import FormContainer from '../reusable/FormContainer';
 import TextInput from '../reusable/TextInput';
 import OneDeeper from '../OneDeeper';
 
@@ -11,16 +12,20 @@ class Form extends React.Component {
   };
 
   render = () => (
-   <form>
-    <div>
-      <label htmlFor="name">Name</label>
-      <input
-        type="text"
-        id="name"
-        value={this.state.name}
-        onChange={({ target: { value: name }}) => this.setState({ name })}
-      /> 
-    </div>
+  <FormContainer
+    onSubmit={() => console.log('submitting', this.state)}
+    isDisabled={this.state.name === ''}
+  >
+    <TextInput
+      id="name"
+      value={this.state.name}
+      label="Name"
+      required
+      onChange={(name, validator) => {
+        this.setState({ name });
+        validator();
+      }}
+    />
     <TextInput
       id="password"
       value={this.state.password}
@@ -33,7 +38,7 @@ class Form extends React.Component {
     <OneDeeper
       deeper={this.state.deeper}
       setState={(value, propName) => console.log(propName, value) || this.setState({ [propName]: value }, () => console.log(this.state.deeper))} />
-  </form>
+  </FormContainer>
   );
 }
 
